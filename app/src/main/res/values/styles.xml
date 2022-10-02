@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="summaryButtonColor">#00000080</color>
+
+    <style name="summaryText">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="summaryButton">
+        <item name="android:layout_height">50dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:backgroundTint">@color/summaryButtonColor</item>
+    </style>
+
+    <style name="tableElement">
+        <item name="android:textSize">18sp</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+
+    <style name="tableHeader" parent="tableElement">
+        <item name="android:gravity">center</item>
+    </style>
+</resources>

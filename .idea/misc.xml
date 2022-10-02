@@ -3,6 +3,13 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/a/Desktop/custom app/app/src/main/res/layout/activity_detail.xml" value="0.42916666666666664" />
+        <entry key="..\:/Users/a/Desktop/custom app/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/Users/a/Desktop/custom app/app/src/main/res/layout/activity_portfolio.xml" value="0.42916666666666664" />
+        <entry key="..\:/Users/a/Desktop/custom app/app/src/main/res/layout/activity_stocks.xml" value="0.33" />
+        <entry key="..\:/Users/a/Desktop/custom app/app/src/main/res/layout/portfolio_row.xml" value="0.33" />
+        <entry key="..\:/Users/a/Desktop/custom app/app/src/main/res/layout/stock_offer_row.xml" value="0.42916666666666664" />
+        <entry key="..\:/Users/a/Desktop/custom app/app/src/main/res/layout/stock_row.xml" value="0.33" />
         <entry key="..\:/Users/a/OneDrive - Swinburne University/semester 4/COS30017 - Software Development for Mobile Devices/Custom app/app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="..\:/Users/a/OneDrive - Swinburne University/semester 4/COS30017 - Software Development for Mobile Devices/Custom app/app/src/main/res/layout/stock_row.xml" value="0.22916666666666666" />
       </map>

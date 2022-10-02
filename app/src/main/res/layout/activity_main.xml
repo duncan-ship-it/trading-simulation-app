@@ -1,36 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/background"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#927E2C"
     tools:context=".MainActivity">
 
-    <SearchView
-        android:layout_width="299dp"
-        android:layout_height="50dp"
-        android:layout_marginEnd="2dp"
-        app:layout_constraintEnd_toStartOf="@+id/toggleButton"
+
+    <TextView
+        style="@style/summaryText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/net_gain"
+        android:textAllCaps="true"
+        app:layout_constraintBottom_toTopOf="@+id/netGainFigure"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/netGainFigure"
+        style="@style/summaryText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/unknown_value"
+        android:textSize="120sp"
+        app:layout_constraintBottom_toTopOf="@+id/scrollingSummary"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ToggleButton
-        android:id="@+id/toggleButton"
-        android:layout_width="110dp"
-        android:layout_height="50dp"
-        android:textColor="#455A64"
-        android:textOff="@string/all_trades_toggle_off"
-        android:textOn="@string/all_trades_toggle_on"
+    <TextView
+        android:id="@+id/investingTotal"
+        style="@style/summaryText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/investing_amount"
+        android:textSize="25sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/netGainFigure" />
 
-    <androidx.recyclerview.widget.RecyclerView
+    <Button
+        android:id="@+id/resetButton"
+        style="@style/summaryButton"
+        android:backgroundTint="#A51313"
+        android:layout_width="100dp"
+        android:text="@string/reset_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/investingTotal" />
+
+    <TextView
+        android:id="@+id/scrollingSummary"
+        style="@style/summaryText"
+        android:textSize="30dp"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toggleButton" />
+        android:layout_height="50dp"
+        android:layout_marginHorizontal="10dp"
+        android:background="#262626"
+        android:ellipsize="marquee"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:scrollHorizontally="true"
+        android:text="@string/scrolling_text_default"
+        android:singleLine="true"
+        app:layout_constraintBottom_toTopOf="@+id/bottomWidgetBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.65" />
 
+    <Button
+        android:id="@+id/portfolioButton"
+        style="@style/summaryButton"
 
+        android:text="@string/portfolio_text"
+        app:layout_constraintBottom_toTopOf="@+id/bottomWidgetBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/scrollingSummary"
+        app:layout_constraintVertical_bias="0.25" />
 
+    <Button
+        android:id="@+id/tradesButton"
+        style="@style/summaryButton"
+
+        android:text="@string/trades_text"
+        app:layout_constraintBottom_toTopOf="@+id/bottomWidgetBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/scrollingSummary"
+        app:layout_constraintVertical_bias="0.75" />
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/bottomWidgetBar"
+        android:layout_width="match_parent"
+        android:layout_height="24dp"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
