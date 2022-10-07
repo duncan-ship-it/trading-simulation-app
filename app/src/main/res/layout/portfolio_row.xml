@@ -3,23 +3,30 @@
     android:layout_width="match_parent"
     android:layout_height="30dp"
     android:orientation="horizontal">
-    <TextView
-        style="@style/tableElement"
-        android:layout_height="match_parent"
-        android:text="@string/symbol_text" />
-    <TextView
-        style="@style/tableElement"
-        android:layout_height="match_parent"
-        android:text="@string/symbol_text"/>
 
     <TextView
+        android:id="@+id/symbol"
         style="@style/tableElement"
-        android:layout_height="match_parent"
-        android:text="@string/symbol_text"/>
+        android:layout_height="match_parent" />
 
     <TextView
+        android:id="@+id/qty"
         style="@style/tableElement"
-        android:layout_height="match_parent"
-        android:text="@string/symbol_text"/>
+        android:layout_height="match_parent" />
+
+    <TextView
+        android:id="@+id/cost"
+        style="@style/tableElement"
+        android:layout_height="match_parent" />
+
+    <TextView
+        android:id="@+id/ask"
+        style="@style/tableElement"
+        android:layout_height="match_parent" />
+
+    <TextView
+        android:id="@+id/profit"
+        style="@style/tableElement"
+        android:layout_height="match_parent" />
 
 </androidx.appcompat.widget.LinearLayoutCompat>

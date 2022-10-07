@@ -7,4 +7,6 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="epic_green">#009933</color>
+    <color name="not_epic_red">#ff3300</color>
 </resources>

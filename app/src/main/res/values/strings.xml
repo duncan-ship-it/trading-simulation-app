@@ -6,7 +6,7 @@
     <string name="investing_amount">Investing $0</string>
 
     <string name="reset_text">Reset</string>
-    <string name="scrolling_text_default">no</string>
+    <string name="scrolling_text_default">--</string>
 
     <string name="portfolio_text">Portfolio</string>
     <string name="trades_text">Trades</string>
@@ -16,5 +16,12 @@
     <string name="bid_price_text">Bid price</string>
     <string name="volume_text">Volume</string>
 
+    <string name="qty_text">Qty</string>
+    <string name="cost_text">Cost</string>
+    <string name="ask_text">Ask price</string>
+    <string name="profit_text">Profit</string>
+
+    <string name="buy_text">Buy</string>
+    <string name="sell_text">Sell</string>
 
 </resources>

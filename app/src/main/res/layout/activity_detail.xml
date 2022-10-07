@@ -7,11 +7,82 @@
     tools:context=".DetailActivity">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/symbolName"
+        style="@style/sectionHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        tools:layout_editor_absoluteX="164dp"
-        tools:layout_editor_absoluteY="32dp" />
+        android:text="@string/unknown_value"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.github.mikephil.charting.charts.LineChart
+        android:id="@+id/historicalData"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/symbolName" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/bottomWidgetBar"
+        app:layout_constraintTop_toBottomOf="@+id/historicalData"
+        tools:layout_editor_absoluteX="1dp">
+
+        <TextView
+            android:id="@+id/buyPrompt"
+            style="@style/sectionHeader"
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:layout_height="wrap_content"
+            android:text="@string/buy_text" />
+
+        <EditText
+            android:id="@+id/buyQuantity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="numberSigned" />
+
+        <Button
+            android:backgroundTint="@color/epic_green"
+            android:textColor="@color/black"
+            android:id="@+id/buyButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/buy_text" />
+
+        <TextView
+            android:id="@+id/sellPrompt"
+            style="@style/sectionHeader"
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:layout_height="wrap_content"
+            android:text="@string/sell_text" />
+
+        <EditText
+            android:id="@+id/sellQty"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="numberSigned" />
+
+        <Button
+            android:backgroundTint="@color/not_epic_red"
+            android:textColor="@color/black"
+            android:id="@+id/sellButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/sell_text" />
+    </LinearLayout>
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/bottomWidgetBar"
+        android:layout_width="match_parent"
+        android:layout_height="24dp"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

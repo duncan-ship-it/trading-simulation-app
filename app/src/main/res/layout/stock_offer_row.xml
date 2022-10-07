@@ -1,6 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="30dp"
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/symbol"
+        style="@style/tableElement"
+        android:layout_height="match_parent" />
+
+    <TextView
+        android:id="@+id/change"
+        style="@style/tableElement"
+        android:layout_height="match_parent" />
+
+    <TextView
+        android:id="@+id/cost"
+        style="@style/tableElement"
+        android:layout_height="match_parent" />
+
+    <TextView
+        android:id="@+id/volume"
+        style="@style/tableElement"
+        android:layout_height="match_parent" />
 
 </androidx.appcompat.widget.LinearLayoutCompat>

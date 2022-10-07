@@ -9,7 +9,6 @@
     android:background="#927E2C"
     tools:context=".MainActivity">
 
-
     <TextView
         style="@style/summaryText"
         android:layout_width="wrap_content"
