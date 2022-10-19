@@ -3,10 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/a/Desktop/custom app/app/src/main/res/layout/activity_detail.xml" value="0.33" />
-        <entry key="..\:/Users/a/Desktop/custom app/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/Users/a/Desktop/custom app/app/src/main/res/layout/activity_detail.xml" value="0.25" />
+        <entry key="..\:/Users/a/Desktop/custom app/app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="..\:/Users/a/Desktop/custom app/app/src/main/res/layout/activity_portfolio.xml" value="0.33" />
         <entry key="..\:/Users/a/Desktop/custom app/app/src/main/res/layout/activity_stocks.xml" value="0.33" />
+        <entry key="..\:/Users/a/Desktop/custom app/app/src/main/res/layout/bottom_widget_fragment.xml" value="0.35128205128205126" />
         <entry key="..\:/Users/a/Desktop/custom app/app/src/main/res/layout/portfolio_row.xml" value="0.33" />
         <entry key="..\:/Users/a/Desktop/custom app/app/src/main/res/layout/stock_offer_row.xml" value="0.33" />
         <entry key="..\:/Users/a/Desktop/custom app/app/src/main/res/layout/stock_row.xml" value="0.33" />

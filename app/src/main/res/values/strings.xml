@@ -8,7 +8,6 @@
     <string name="reset_text">Reset</string>
     <string name="scrolling_text_default">--</string>
 
-    <string name="portfolio_text">Portfolio</string>
     <string name="trades_text">Trades</string>
 
     <string name="symbol_text">Symbol</string>
@@ -23,5 +22,9 @@
 
     <string name="buy_text">Buy</string>
     <string name="sell_text">Sell</string>
+
+    <string name="summary_text">Summary</string>
+    <string name="portfolio_text">Portfolio</string>
+    <string name="explore_text">Explore</string>
 
 </resources>
