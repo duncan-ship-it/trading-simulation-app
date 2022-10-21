@@ -6,14 +6,17 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.example.trading_app.databinding.ActivityMainBinding
-import yahoofinance.Stock
+import com.google.api.Http
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.json.Json
+import okhttp3.*
+import java.io.IOException
 
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding = ActivityMainBinding.inflate(layoutInflater)
-
         setContentView(binding.root)
 
         binding.portfolioButton.setOnClickListener {
@@ -28,13 +31,14 @@ class MainActivity : AppCompatActivity() {
         val reader = resources.openRawResource(R.raw.stocks).bufferedReader()
         val symbols = reader.use() { it.readText() }.split("\n")
 
-        // initialise stock view model
-        val stockModel: StockViewModel by viewModels {
+        val model: StockViewModel by viewModels {
             StockViewModel.Factory(symbols.toTypedArray())
         }
 
-        stockModel.getStockData().observe(this, Observer<MutableMap<String, Stock>>{ data ->
-            binding.netGainFigure.text = data["TSLA"]?.name
-        })
+        val stockObserver = Observer<List<Stock>> {
+            println(it[1].tngoLast)
+        }
+
+        model.getStockData().observe(this, stockObserver)
     }
 }

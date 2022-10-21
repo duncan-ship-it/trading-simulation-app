@@ -2,7 +2,7 @@
 
 An Android app that allows users to test various market strategies using real-time stock data.
 
-## Credits
+## Resources used
 
 ### Chart layout component
 
@@ -10,7 +10,10 @@ An Android app that allows users to test various market strategies using real-ti
 
 ### Stock API
 
-[Yahoo Finance API for Java](https://github.com/sstrickx/yahoofinance-api)
+[Tiingo REST API for IEX](https://api.tiingo.com/documentation/iex)
+
+### HTTP library
+[OkHttp3](https://square.github.io/okhttp/)
 
 ### External references
 
@@ -21,3 +24,5 @@ An Android app that allows users to test various market strategies using real-ti
 - https://programmer.ink/think/a-new-way-to-create-a-viewmodel-creationextras.html
 - https://medium.com/@lucasnrb/advanced-viewmodel-9cca1499addb
 - https://stackoverflow.com/questions/61364874/view-models-for-recyclerview-items
+- https://www.baeldung.com/guide-to-okhttp
+- https://guides.codepath.com/android/storing-secret-keys-in-android
