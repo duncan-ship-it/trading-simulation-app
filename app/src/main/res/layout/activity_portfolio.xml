@@ -27,16 +27,6 @@
             android:layout_height="wrap_content"
             android:text="@string/cost_text" />
 
-        <TextView
-            style="@style/tableHeader"
-            android:layout_height="wrap_content"
-            android:text="@string/ask_text" />
-
-        <TextView
-            android:layout_height="wrap_content"
-            style="@style/tableHeader"
-            android:text="@string/profit_text" />
-
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     <androidx.recyclerview.widget.RecyclerView

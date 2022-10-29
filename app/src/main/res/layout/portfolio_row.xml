@@ -19,14 +19,4 @@
         style="@style/tableElement"
         android:layout_height="match_parent" />
 
-    <TextView
-        android:id="@+id/ask"
-        style="@style/tableElement"
-        android:layout_height="match_parent" />
-
-    <TextView
-        android:id="@+id/profit"
-        style="@style/tableElement"
-        android:layout_height="match_parent" />
-
 </androidx.appcompat.widget.LinearLayoutCompat>

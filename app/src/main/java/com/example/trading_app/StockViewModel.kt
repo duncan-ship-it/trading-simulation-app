@@ -1,28 +1,29 @@
 package com.example.trading_app
 
-import android.app.Application
-import android.content.Context
 import androidx.lifecycle.*
-import com.google.common.base.Ticker
-import com.google.common.eventbus.Subscribe
 
 import kotlinx.serialization.*
 import kotlinx.serialization.json.Json
 import okhttp3.*
 import java.io.IOException
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.util.*
 
 
-class StockViewModel(private val symbols: Array<String>): ViewModel() {
+class StockViewModel(private val token: String): ViewModel() {
     private val client = OkHttpClient()
 
-    private val stocks =  MutableLiveData<List<Stock>>().also {
-        loadStockData()
+    private val stocks =  MutableLiveData<List<CurrentStockData>>().also {
+        it.value = listOf()  // initialise value as empty list (for adapter)
     }
 
-    // retrieve symbol data asynchronously from api
-    private fun loadStockData() {
+    // retrieve current stock data from multiple symbols asynchronously from api
+    fun loadStockData(symbols: Array<String>) {
         val tickers = symbols.reduce{acc, next -> acc + ",${next}"}
-        val url = "https://api.tiingo.com/iex/?tickers=${tickers}&token=${R.string.AUTH_TOKEN}"
+        val url = "https://api.tiingo.com/iex/?tickers=${tickers}&token=${token}"
 
         val request = Request.Builder()
             .url(url)
@@ -35,10 +36,9 @@ class StockViewModel(private val symbols: Array<String>): ViewModel() {
             override fun onResponse(call: Call?, response: Response?) {
                 val responseBody = response?.body()?.string()
 
-                responseBody?.let {
-                    val res = Json.decodeFromString<List<Stock>>(it)
-
-                    stocks.postValue(res)
+                responseBody?.let { body ->
+                    stocks.postValue(Json.decodeFromString<List<CurrentStockData>>(body)
+                        .sortedBy { it.ticker })
                 }
             }
 
@@ -48,14 +48,15 @@ class StockViewModel(private val symbols: Array<String>): ViewModel() {
         })
     }
 
-    fun getStockData(): LiveData<List<Stock>> {
-        return stocks  // allow access to the livedata so it can be observed
+    // allow access to the live stocks data so it can be observed
+    fun getStockData(): LiveData<List<CurrentStockData>> {
+        return stocks
     }
 
-    class Factory(private val symbols: Array<String>) : ViewModelProvider.Factory {
+    class Factory(private val token: String) : ViewModelProvider.Factory {
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            return StockViewModel(symbols) as T
+            return StockViewModel(token) as T
         }
     }
 }

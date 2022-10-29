@@ -3,7 +3,8 @@
     <string name="unknown_value">--</string>
 
     <string name="net_gain">Net Gain</string>
-    <string name="investing_amount">Investing $0</string>
+    <string name="investing_amount">Investing $%1s</string>
+    <string name="change_value">%1s%%</string>
 
     <string name="reset_text">Reset</string>
     <string name="scrolling_text_default">--</string>
@@ -11,7 +12,7 @@
     <string name="trades_text">Trades</string>
 
     <string name="symbol_text">Symbol</string>
-    <string name="change_text">Change</string>
+    <string name="change_text">Today\'s change</string>
     <string name="bid_price_text">Bid price</string>
     <string name="volume_text">Volume</string>
 
@@ -27,4 +28,6 @@
     <string name="portfolio_text">Portfolio</string>
     <string name="explore_text">Explore</string>
 
+    <string name="buy_at_text">Buy at $%1s</string>
+    <string name="sell_at_text">Sell at $%1s</string>
 </resources>
