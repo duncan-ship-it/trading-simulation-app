@@ -133,7 +133,7 @@ class DetailActivity : AppCompatActivity() {
                 }
             })
 
-            val lineData = LineDataSet(values, symbol)
+            val lineData = LineDataSet(values, "${symbol} opening prices")
 
             lineChart.data = LineData(lineData)  // set data on line chart
         }
@@ -150,8 +150,6 @@ class DetailActivity : AppCompatActivity() {
 
         val url = "https://api.tiingo.com/iex/$symbol/prices?startDate=$currentDate&resampleFreq=" +
                 "4hour&token=$token"
-
-        println(url)
 
         val request = Request.Builder()
             .url(url)
@@ -171,7 +169,7 @@ class DetailActivity : AppCompatActivity() {
             }
 
             override fun onFailure(call: Call?, e: IOException?) {
-                println("failure :(")
+                toast("An error has occurred. Please restart the app.")
             }
         })
     }

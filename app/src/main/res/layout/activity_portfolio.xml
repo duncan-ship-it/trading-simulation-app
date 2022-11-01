@@ -39,7 +39,7 @@
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/bottomWidgetBar"
         android:layout_width="match_parent"
-        android:layout_height="26dp"
+        android:layout_height="35dp"
         android:name="com.example.trading_app.BottomWidgetFragment"
         app:layout_constraintBottom_toBottomOf="parent" />
 

@@ -45,7 +45,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="numberSigned" />
+            android:inputType="numberSigned"
+            android:textAlignment="center" />
 
         <Button
             android:backgroundTint="@color/epic_green"
@@ -53,6 +54,7 @@
             android:id="@+id/buyButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="100dp"
             android:text="@string/buy_text" />
 
         <TextView
@@ -68,7 +70,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="numberSigned" />
+            android:inputType="numberSigned"
+            android:textAlignment="center" />
 
         <Button
             android:backgroundTint="@color/not_epic_red"
@@ -76,13 +79,14 @@
             android:id="@+id/sellButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="100dp"
             android:text="@string/sell_text" />
     </LinearLayout>
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/bottomWidgetBar"
         android:layout_width="match_parent"
-        android:layout_height="26dp"
+        android:layout_height="35dp"
         android:name="com.example.trading_app.BottomWidgetFragment"
         app:layout_constraintBottom_toBottomOf="parent" />
 

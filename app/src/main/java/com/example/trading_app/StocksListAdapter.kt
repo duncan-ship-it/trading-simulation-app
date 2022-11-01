@@ -34,7 +34,7 @@ class StocksListAdapter(private val data: List<CurrentStockData>,
             private val volumeView: TextView = v.findViewById(R.id.volume)
 
             fun bind(item: CurrentStockData) {
-                val change = calculateChange(item.open, item.prevClose)
+                val change = calculateChange(item.open, item.tngoLast)
 
                 // use change figure if not null
                 change?.let {
@@ -62,9 +62,9 @@ class StocksListAdapter(private val data: List<CurrentStockData>,
 
             // get percentage change between opening value and current value
             private fun calculateChange(open: Double?, current: Double?): Double? {
-                open?.let {
-                    current?.let {
-                        val change = (current - open) / open
+                open?.let { openNotNull ->
+                    current?.let { currentNotNull ->
+                        val change = (currentNotNull - openNotNull) / openNotNull
                         return (change * 100.0).roundToInt() / 100.0  // round to 2 decimal places
                     }
                 }

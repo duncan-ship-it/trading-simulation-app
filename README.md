@@ -1,33 +1,36 @@
 # Trading Simulation App report
 
-[Repository link](https://github.com/duncan-ship-it/trading-simulation-app)
+**[Click here to go to repository](https://github.com/duncan-ship-it/trading-simulation-app)**
 
 ## Summary
 
-An Android app that allows users to test various market strategies using real-time stock data.
+An Android app that allows users to test various market strategies using real-time international stock data from the IEX exchange.
 
-## Libraries used
+## Final app walkthrough
+
+
+
+## Libraries/Resources used
 
 ### Stock API
 
 [Tiingo REST API for IEX](https://api.tiingo.com/documentation/iex)
 
-- alternatives:
-  - finnhub
-  - tiingo websocket
-  - yahoo finance wrapper
-  - etc.
-  - 
+Some of the alternatives I explored beforehand:
+  - Finnhub
+  - Tiingo websocket
+  - Yahoo Finance wrapper for Java
+
 ### HTTP library
-[OkHttp3](https://square.github.io/okhttp/)
+[OkHttp3](https://square.github.io/okhttp/) - Required to make HTTP requests to API
 
-### Firebase SDK
+### Database
 
+[Firebase SDK](https://firebase.google.com/)
 
 ### Chart layout component
 
 [MPAndroidChart](https://github.com/PhilJay/MPAndroidChart)
-
 
 ### Prototyping tool
 
@@ -49,23 +52,44 @@ The grey bar will display the stocks the user is currently invested in, with an 
 
 The background color of this activity is dependant on the net gain figure. It will transition from green to red, with green corresponding to good performance, and red the opposite.
 
+![Main activity](assets/mainactivity.JPG)
 
 ### StocksActivity
 
-This activity 
+This activity provides the user with a list of stocks, their current intraday change, as well as their bid (aquisition) price and volume. When a row is tapped on, a detail activity is shown, which allows the user to buy and sell the corresponding stock at their respective market values, as well as see the recent trend of the stock price.
+
+![Stocks activity](assets/stocksactivtiy.JPG)
 
 ### PortfolioActivity
 
+This activity summarises the user's current holdings in stock, showing the symbol names, quantity, and overall cost of this aquistion (product of quantity and unit price).
 
+![Portfolio activity](assets/portfolioactivity.JPG)
 
 ### DetailActivity
 
-This activity appears when the user taps on a stocks row in either the StocksActivity or the Portfolio activity, which provides extra detail on each stock, whilst allowing the user to modify or create new orders (sell and buy respectively). 
+This activity appears when the user taps on a stocks row in either the StocksActivity or the Portfolio activity, which provides extra detail on each stock, whilst allowing the user to modify (or delete, if all units sold) or create new orders (sell and buy respectively).
 
+![Detail activity](assets/detailactivity.JPG)
 
 ### UI patterns utilised
 
-Color
+**Continuous Scrolling**
+
+The overflow of the stock/portfolio list allows the user to intuitively scroll down through the various stocks the user can buy. Nearly all social media apps feature continuous scrolling as a means to find new content with minimal effort, as a means to maintain engagement with the app.
+
+**Notifications**
+
+When the user attempts to buy or sell stocks, a toast is made, notifying the user of success (or invalid input):
+
+![Successful order](assets/notification.JPG)
+
+This is a common way to quickly notify users of events that have occurred, seen across many types of app types, most notably ones with login functionality (incorrect password notification).
+
+**Pricing table**
+
+The stocks activity quickly summarises the prices of all the stocks, mimicking many other apps which utilise this pattern to quickly show the user their price ranges for their products/services. This UI pattern is seen in various types of apps (free to play games do this to encourage the user to spend money in the app, although is often disguised as the premium in-game currency as opposed to price figures).
+
 
 ## Feedback received
 
@@ -87,17 +111,43 @@ Color
 
     _A great application Idea with great execution!_
 
-## Improvements based on feedback
+4. _Good thinking on the app. I liked the features you provide. It is great how you have provided the important information on the stocks listed page using recycler view and colour-coded them according to the price. However, I feel the UI is very dull. You can use brighter colours and make the text more readable. The button shouldn't be occupying the entire screen, try using "wrap content" instead of "match parent", and try to add more features to the buying and selling page like stop-loss etc. You can also think about including a details page about the stock where you show the charts and other ratios._
+   
+5. _Hi, just here to say this is really neat. And unique, amongst our other projects here. Sure, there might be plenty apps that let you paper trade, but I can be sure this one won't try to sell me crypto or financial coaching or whatever. Other than the usual request for a dark mode, I have noting else to say. Keep up the good work._
 
-The feedback received was largely related to the UI of the app. 
+6. _This is quite a unique idea for a custom project with room for a lot more functionality. My suggestion would be to implement a watch list to independently monitor selected stocks. It's a common but integral feature in trading apps._
 
-### 
+## Feedback analysis and improvements
+
+### Overview
+
+The main points of criticism related to the UI of the app. Notably, the reponses mentioned that the buttons are too large, the input fields should have centered text alignment, and the text size is too small.
+
+The non-UI criticisms were either out of scope, or features already planned for the current app. For instance, response 1's suggestion of a portfolio activity was already planned, whereas response 4's suggestion of implementing stop-loss was not included in the primary scope (although I had plans to implement more advanced ordering features if work was completed ahead of schedule). 
+
+### Buttons too large
+
+The feedback received was largely related to the UI of the app. 2 of the 6 responses mentioned the sizing of the buttons being too large, which may result in them being pressed by accident. This would be especially critical when it comes to buying/selling stock.
+
+To remedy this issue, I added significant horizontal margins to the buy and sell buttons, minimising the chances of the user accidentally tapping either button. For the less critical buttons, I decided that tapping these buttons by accident was not such a big deal, since they are purely for navigational purposes.
+
+### Centering input field text alignment
+
+Following response 1's advice, I centered the input fields within the DetailActivity. This not only improves the aesthetics of this activity, it is also much more readable, since the user's input appears closer to the center of the screen.
+
+### Text too small
+
+I increased the text size of each row font in the Stocks and Portfolio activities, making this data more readable, following response 2's advice.
+
+### Non-UI remedies
+
+Response 1 mentioned the addition of an activity that showcases the user's portfolio. Since finishing the app, this is now a feature (it was also intended to be one, just the WIP version did not feature this activity). Similarly, response 4's suggestion of a chart in the detail activity was a feature of the final app (just wasn't available in the WIP version).
 
 ## App limitations
 
 ### Live updates
 
-The app currently does not update on intervals (e.g., every 5 seconds), however will refresh on activity restart or resume. For instance, if the portfolio or stocks activity are browsed, and then exited, the main activity will update it's data.
+The app currently does not update on an interval (e.g., every 5 seconds), however will refresh on activity restart or resume. For instance, if the portfolio or stocks activity are browsed, and then exited, the resuming main activity will update the data.
 
 A solution to this drawback would be to run a thread that would call the update methods on a set interval, (e.g., 5 seconds) which would allow the data to be updated without relying on lifecycle event handling methods such as `onCreate` and `onResume`.
 
@@ -105,11 +155,13 @@ A solution to this drawback would be to run a thread that would call the update 
 
 Currently the app allows the user to trade only 100 of the most traded symbols on the IEX (out of the thousands that are listed on the exchange), limiting the user's ability to test out strategies on less traded symbols.
 
-A workaround to this would be to 
+A workaround to this would be to procedurally retrieve new stocks from the API as the user scrolls through the stock activity (basically infinite scroll).
 
 ### Choosing which stock order to sell
 
-Currently 
+Currently the app will try to sell off the inputted number of units by iterating through orders consisting of the same stock symbol, in FIFO (First In, First Out) order. If these orders were made at differing price points, this may not be desireable functionality for the user.
+
+A solution to this would be to facilitate the option to choose which orders to partially or fully sell off, through the addition of a list of all orders made of a particular stock inside the detail activity. This offloads the responsibility to the user to decide when to sell certain orders.
 
 ## External references
 

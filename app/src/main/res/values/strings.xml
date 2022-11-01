@@ -28,6 +28,12 @@
     <string name="portfolio_text">Portfolio</string>
     <string name="explore_text">Explore</string>
 
+    <string name="widget_exit_text">Exit</string>
+
     <string name="buy_at_text">Buy at $%1s</string>
     <string name="sell_at_text">Sell at $%1s</string>
+
+    <string name="confirm_exit">"Are you sure you want to exit?"</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 </resources>

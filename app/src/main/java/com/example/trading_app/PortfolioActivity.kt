@@ -44,7 +44,6 @@ class PortfolioActivity : AppCompatActivity() {
                         it.get("price") as Double
                     )
                 }
-                println("size: ${holdings.value!!.size}")
             }
     }
 }

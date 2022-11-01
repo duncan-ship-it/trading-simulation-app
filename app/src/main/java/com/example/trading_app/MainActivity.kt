@@ -2,6 +2,7 @@ package com.example.trading_app
 
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.text.SpannableString
 import android.text.SpannedString
@@ -12,6 +13,7 @@ import android.text.style.ForegroundColorSpan
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.text.bold
 import androidx.core.text.buildSpannedString
@@ -21,7 +23,9 @@ import androidx.lifecycle.Observer
 import com.example.trading_app.databinding.ActivityMainBinding
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import java.lang.Integer.max
 import java.math.RoundingMode
+import kotlin.math.min
 
 
 class MainActivity : AppCompatActivity() {
@@ -70,8 +74,6 @@ class MainActivity : AppCompatActivity() {
             orders.value?.let { orders ->
                 for (order in orders) {
                     val currentPrice = stockData.filter { it.ticker == order.symbol}[0].tngoLast
-
-                    println(currentPrice)
 
                     totalInvested += (order.qty * order.price).toFloat()
                     portfolioValue += (order.qty * currentPrice).toFloat()
@@ -158,10 +160,17 @@ class MainActivity : AppCompatActivity() {
                 findViewById<TextView>(R.id.scrollingSummary).text = marketReport
             }
         }
+
+        // update color of background based on net gain
+        findViewById<ConstraintLayout>(R.id.background).setBackgroundColor(
+            Color.parseColor(
+                hexColorOf(netGain)
+            )
+        )
     }
 
     private fun getSymbolSummary(symbolData: CurrentStockData): SpannedString {
-        val isProfitable = symbolData.open > symbolData.tngoLast
+        val isProfitable = symbolData.tngoLast > symbolData.open
 
         val colorRef = if (isProfitable) R.color.epic_green else R.color.not_epic_red
 
@@ -172,5 +181,25 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    // return a hex color string representing the performance of the user (green to red)
+    private fun hexColorOf(net: Float): String {
+        var red = 200
+        var green = 200
+
+        if (net > 0) {
+            red = min((255 * net / 100).toInt(),200)
+        }
+        else if (net < 0) {
+            green = min((255 * -net / 100).toInt(), 200)
+        }
+
+        return String.format(
+            "#%s%s4c",
+            Integer.toHexString(red).padStart(2, '0'),
+            Integer.toHexString(green).padStart(2, '0')
+        )
+
     }
 }
