@@ -1,0 +1,152 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+class AppCompatActivity
+class Fragment
+abstract class RecyclerView.Adapter
+abstract class RecyclerView.ViewHolder
+abstract class ViewModel
+
+class MainActivity {
+    private var orders: MutableLiveData<List<StockOrder>>
+    private val db: FirebaseFirestore
+    private val model: StockViewModel
+
+    override fun onCreate(savedInstanceState: Bundle?)
+    override fun onResume()
+    private fun getDatabaseOrders()
+    private fun updateFinances(portfolioValue: Float, totalInvested: Float)
+    private fun getSymbolSummary(symbolData: CurrentStockData): SpannedString
+    private fun hexColorOf(net: Float): String
+}
+
+class DetailActivity {
+    private val lineChart: LineChart
+    private val token: String
+
+    override fun onCreate(savedInstanceState: Bundle?)
+    private fun getHistoricalData(symbol: String,
+                                      onSuccess: (data: List<HistoricalStockData>) -> Unit)
+    private fun Context.toast(message: CharSequence)
+}
+
+class PortfolioActivity {
+    private var holdings: MutableLiveData<List<StockOrder>>
+
+    override fun onCreate(savedInstanceState: Bundle?)
+}
+
+class StocksActivity {
+    override fun onCreate(savedInstanceState: Bundle?)
+}
+
+class BottomWidgetFragment {
+    override fun onCreateView(...): View?
+}
+
+class PortfolioListAdapter.ViewHolder {
+    private val symbolView: TextView
+    private val qtyView: TextView
+    private val costView: TextView
+
+    fun bind(item: StockOrder)
+}
+
+class PortfolioListAdapter {
+    override fun onCreateViewHolder(...): PortfolioListAdapter.ViewHolder
+    override fun getItemCount()
+    override fun onBindViewHolder(...)
+    inner class ViewHolder(private val v: View) : RecyclerView.ViewHolder(v)
+}
+
+class StocksListAdapter.ViewHolder {
+    private val symbolView: TextView
+    private val changeView: TextView
+    private val costView: TextView
+    private val volumeView: TextView
+
+    fun bind(item: CurrentStockData)
+    private fun calculateChange(open: Double?, current: Double?): Double?
+}
+
+class StocksListAdapter {
+    override fun onCreateViewHolder(...): StocksListAdapter.ViewHolder
+    override fun getItemCount()
+    override fun onBindViewHolder(...)
+    inner class ViewHolder(private val v: View) : RecyclerView.ViewHolder(v)
+
+}
+
+class StockViewModel {
+    fun loadStockData(symbols: Array<String>)
+    fun getStockData(): LiveData<List<CurrentStockData>>
+
+}
+
+struct CurrentStockData {
+    val ticker: String,
+    val timestamp: String,
+    val quoteTimestamp: String?,
+    val lastSaleTimestamp: String?,
+    val last: Double?,
+    val lastSize: Int?,
+    val tngoLast: Double,
+    val prevClose: Double,
+    val open: Double,
+    val high: Double,
+    val low: Double,
+    val mid: Double?,
+    val volume: Int,
+    val bidSize: Int?,
+    val bidPrice: Double?,
+    val askSize: Double?,
+    val askPrice: Double?
+}
+struct HistoricalStockData {
+    val date: String,
+    val open: Float,
+    val high: Float,
+    val low: Float,
+    val close: Float
+}
+
+struct StockOrder {
+    val symbol: String,
+    val qty: Long,
+    val price: Double
+}
+
+AppCompatActivity <|-- MainActivity
+AppCompatActivity <|-- DetailActivity
+AppCompatActivity <|-- PortfolioActivity
+AppCompatActivity <|-- StocksActivity
+
+RecyclerView.Adapter <|-- PortfolioListAdapter
+RecyclerView.Adapter <|-- StocksListAdapter
+
+StocksActivity <-- MainActivity
+PortfolioActivity <-- MainActivity
+
+DetailActivity <-- StocksActivity
+
+Fragment <|-- BottomWidgetFragment
+ViewModel <|-- StockViewModel
+
+StockViewModel <-- MainActivity
+
+
+StocksListAdapter <-- StocksActivity
+StocksListAdapter.ViewHolder <-- StocksListAdapter
+RecyclerView.ViewHolder <|-- StocksListAdapter.ViewHolder
+
+PortfolioListAdapter <-- PortfolioActivity
+PortfolioListAdapter.ViewHolder <-- PortfolioListAdapter
+RecyclerView.ViewHolder <|-- PortfolioListAdapter.ViewHolder
+
+
+StockOrder <-- MainActivity
+CurrentStockData <-- MainActivity
+HistoricalStockData <-- DetailActivity
+
+
+@enduml

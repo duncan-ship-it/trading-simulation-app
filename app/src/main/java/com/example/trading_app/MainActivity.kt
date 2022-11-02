@@ -7,8 +7,6 @@ import android.os.Bundle
 import android.text.SpannableString
 import android.text.SpannedString
 import android.text.TextUtils
-import android.text.method.LinkMovementMethod
-import android.text.method.ScrollingMovementMethod
 import android.text.style.ForegroundColorSpan
 import android.widget.TextView
 import androidx.activity.viewModels
@@ -41,9 +39,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        binding.scrollingSummary.movementMethod = LinkMovementMethod.getInstance()
-        binding.scrollingSummary.setHorizontallyScrolling(true)
         
         binding.portfolioButton.setOnClickListener {
             startActivity(Intent(this, PortfolioActivity::class.java))

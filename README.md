@@ -1,14 +1,12 @@
 # Trading Simulation App report
 
+## Repository
+
 **[Click here to go to repository](https://github.com/duncan-ship-it/trading-simulation-app)**
 
 ## Summary
 
 An Android app that allows users to test various market strategies using real-time international stock data from the IEX exchange.
-
-## Final app walkthrough
-
-
 
 ## Libraries/Resources used
 
@@ -123,7 +121,7 @@ The stocks activity quickly summarises the prices of all the stocks, mimicking m
 
 The main points of criticism related to the UI of the app. Notably, the reponses mentioned that the buttons are too large, the input fields should have centered text alignment, and the text size is too small.
 
-The non-UI criticisms were either out of scope, or features already planned for the current app. For instance, response 1's suggestion of a portfolio activity was already planned, whereas response 4's suggestion of implementing stop-loss was not included in the primary scope (although I had plans to implement more advanced ordering features if work was completed ahead of schedule). 
+The non-UI criticisms were either out of scope, or features already planned for the current app. For instance, response 1's suggestion of a portfolio activity was already planned, whereas response 4's suggestion of implementing stop-loss was not included in the primary scope (although I had plans to implement more advanced ordering features if work was completed ahead of schedule).
 
 ### Buttons too large
 
@@ -142,6 +140,45 @@ I increased the text size of each row font in the Stocks and Portfolio activitie
 ### Non-UI remedies
 
 Response 1 mentioned the addition of an activity that showcases the user's portfolio. Since finishing the app, this is now a feature (it was also intended to be one, just the WIP version did not feature this activity). Similarly, response 4's suggestion of a chart in the detail activity was a feature of the final app (just wasn't available in the WIP version).
+
+## Application architecture
+
+### UML Overview
+![UML diagram of app](assets/uml.png)
+
+### Application flow
+
+Within the MainActivity, both user-made orders and stock data is loaded in asynchronously. This is done here since we need this data to calculate the profit margin of the user, involving the acquisition cost and current value of each of the user's stocks. All stock-related data is reloaded in the `onCreate` and `onResume` lifecycle methods. 
+
+As seen from the associations, the Stocks activity and Portfolio activity become available from the Main activtiy, and are launched as intents. The portfolio activity will independently retrieve the orders using a Firestore reference object (refer to Appendix). Similarly, the stocks activity independently retrieves the stock data from the API.
+
+The reason why data is retrieved seperately from the main activity in both of these activities is in case the user enters this activity before this data is loaded in the main activity, meaning that these activities will be sent no data.
+
+Within the Stocks activity, displaying the list of available stocks, the user can navigate to the Detail activity, which shows a more in-depth view of the stock, including it's historical prices, and it's current buy/sell price.
+
+### Data storage
+
+For storing data, I decided to use serialisable data classes that hold the values from the API/database response. In doing so, we can simply convert the a given JSON string into an instance of this data class using `Json.decodeFromString<T>(string)`, where T is the data class. This is a lot more elegant, scalable and robust than attempting to extract the values from the raw string, and leaves us with clean objects with attributes as values (e.g., `listOfStocks[0].price`). For further information, refer to Appendix A.
+
+### Use of Fragments
+
+I decided to make the exit widget bar a fragment, being a reusable UI component which appears in every activity. This fragment is included declaritively in each activity's layout file (hence it is not associated with any other class in the UML). This also means future changes to this component will be reflected in all instances of the frament, being more robust than simply declaring the child views in each activity layout file.
+
+### Use of RecyclerViews
+
+RecyclerViews where utilised as list layout views for both the portfolio and stock scrolling activities. The reason for this is that they are more optimized than ListView for longer lists (especially needed for the stocks activity, being a long list of stocks), reusing existing placeholder view rows. It is also more customisable than ListView, [being considered the preferred view according to the Android docs.](https://developer.android.com/reference/android/widget/ListView)
+
+### Use of ViewModels/LiveData
+
+LiveData was used to store the database orders, so this data could be observed (Appendix A). Meanwhile, a ViewModel was used to retrieve API data, which was stored as a LiveData attribute within the ViewModel.
+
+The reason why is that the API logic was much more complex than the database retrieval, such that it was cleaner and more cohesive to abstract this logic into it's own ViewModel class. 
+
+Another reason was the relatively slower latency of the API compared to the Firestore latency. This meant that the ViewModel would cache the API response on reset, and another database response could simply be retrieved, at negligible cost in terms of time.
+
+### Navigability
+
+On each activity, there is a widget bar fragment, which allows the user to exit each activity (and ultimately the app from the Main Activity), without relying on hard or soft buttons. This may be helpful to a less tech-savvy user, who is used to using in-app controls to navigate, as opposed to the Android buttons.
 
 ## App limitations
 
@@ -162,6 +199,137 @@ A workaround to this would be to procedurally retrieve new stocks from the API a
 Currently the app will try to sell off the inputted number of units by iterating through orders consisting of the same stock symbol, in FIFO (First In, First Out) order. If these orders were made at differing price points, this may not be desireable functionality for the user.
 
 A solution to this would be to facilitate the option to choose which orders to partially or fully sell off, through the addition of a list of all orders made of a particular stock inside the detail activity. This offloads the responsibility to the user to decide when to sell certain orders.
+
+## Appendix A - Code snippets
+
+### Retrieving data from Firestore
+
+```kotlin
+val db = Firebase.Firestore()
+
+db.collection("orders")
+    .get()
+    .addOnSuccessListener { result ->  // callback lambda called when data is received
+        for (document in result) {
+            println("${document.symbol}: ${document.price}")
+        }
+    }
+```
+
+### Deserialising JSON data
+
+```kotlin
+// take json response body and parse as list of HistoricalStockData instances
+val historicalData = Json.decodeFromString<List<HistoricalStockData>>(body)
+```
+
+### Retrieving data from REST API
+
+```kotlin
+val url = "https://api.tiingo.com/iex/$symbol/prices?startDate=$currentDate&resampleFreq=" +
+                "4hour&token=$token"
+
+val request = Request.Builder()
+    .url(url)
+    .build()
+
+val call = client.newCall(request)
+
+// enqueuing call allows multiple calls to be made and processed at the same time
+call.enqueue(object: Callback {
+    @Throws(IOException::class)
+    override fun onResponse(call: Call?, response: Response?) {
+        val responseBody = response?.body()?.string()
+
+        responseBody?.let { body ->
+            val historicalData = Json.decodeFromString<List<HistoricalStockData>>(body)
+            onSuccess(historicalData)
+        }
+    }
+
+    override fun onFailure(call: Call?, e: IOException?) {
+        toast("An error has occurred. Please restart the app.")
+    }
+})
+```
+
+### Live Data and ViewModel
+
+StockViewModel.kt
+
+```kotlin
+class StockViewModel(private val token: String): ViewModel() {
+    private val client = OkHttpClient()
+
+    private val stocks =  MutableLiveData<List<CurrentStockData>>().also {
+        it.value = listOf()  // initialise value as empty list (for adapter)
+    }
+
+    // retrieve current stock data from multiple symbols asynchronously from api
+    fun loadStockData(symbols: Array<String>) {
+        ...
+    }
+
+    // allow access to the live stocks data so it can be observed
+    fun getStockData(): LiveData<List<CurrentStockData>> {
+        return stocks
+    }
+
+    class Factory(private val token: String) : ViewModelProvider.Factory {
+        @Suppress("UNCHECKED_CAST")
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
+            return StockViewModel(token) as T
+        }
+    }
+}
+```
+
+MainActivity.kt
+
+```kotlin
+...
+private val model: StockViewModel by viewModels {
+    StockViewModel.Factory(resources.getString(R.string.AUTH_TOKEN))
+}
+
+override fun onCreate(savedInstanceState: Bundle?) {
+    ...
+    ...
+    ...
+    // check for data updates from stock data view model
+    val stockDataObserver = Observer<List<CurrentStockData>> { stockData ->
+        var portfolioValue = 0f
+        var totalInvested = 0f
+
+        orders.value?.let { orders ->
+            for (order in orders) {
+                val currentPrice = stockData.filter { it.ticker == order.symbol}[0].tngoLast
+
+                totalInvested += (order.qty * order.price).toFloat()
+                portfolioValue += (order.qty * currentPrice).toFloat()
+            }
+        }
+
+        updateFinances(portfolioValue, totalInvested)
+    }
+
+    model.getStockData().observe(this, stockDataObserver)
+```
+
+### Securely retrieving API key
+
+res/values/secrets.xml: **(not tracked by Git)**
+```xml
+<resources>
+    <string name="AUTH_TOKEN">super_secret_token</string>
+</resources>
+```
+
+```kotlin
+private val token: String by lazy {
+    resources.getString(R.string.AUTH_TOKEN)  // token is only available with access to secrets.xml
+}
+```
 
 ## External references
 
